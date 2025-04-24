@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+}
+
+body {
+  background-color: rgb(189, 189, 189);
+}
+
+header nav ul {
+  color: white;
+}
+header nav ul li {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: lightsteelblue;
+  display: flex;
+  justify-content: center;
+  margin: 10px 45%;
+  padding: 1px;
+  border-radius: 20px;
+}
+header .front-page h1 {
+  text-align: center;
+  justify-content: center;
+  background-color: lightskyblue;
+  border-radius: 20px;
+  padding: 1px;
+  margin: 10px 35%;
+}
+header .front-page img {
+  width: 50%;
+  margin: 30px 25%;
+}
+
+main .carta img {
+  display: inline-block;
+  margin: 20px 40%;
+  width: 20%;
+}
+main .carta p {
+  font-size: x-large;
+  background-color: aliceblue;
+  display: flex;
+  margin: 10px 30%;
+  justify-content: center;
+  border-radius: 15px;
+}
+
+footer {
+  background-color: lightslategray;
+}
+footer .pie h4 {
+  font-size: x-large;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  text-decoration: underline;
+  margin: 10px;
+  padding: 10px;
+}
+footer .form {
+  margin: 5px;
+  padding: 5px;
+}
+
+
+/* body {
+  background-color: rgb(189, 189, 189);
+}
+
+header{
+  .front-page .portada{
+    h1{
+      text-align: center;
+      justify-content: center;
+      background-color: lightskyblue;
+      border-radius: 20px;
+      padding: 1px;
+      margin: 10px 30%;
+    }
+    img{
+      width: 100px;
+      height: 100px;
+    }
+
+  }
+
+}
+
+
+main .menu-tarjetas{
+  display: grid;
+  grid-template-areas: 200px 200px;
+  grid-area: "carta1 carta1 carta1", "carta2 carta2 carta2", "carta3 carta3 carta3", "carta4 carta4 carta4";
+  width: 10%;
+  height: 20%;
+
+
+} */
+
+/*# sourceMappingURL=style.css.map */
