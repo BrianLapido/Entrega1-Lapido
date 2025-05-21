@@ -2,21 +2,37 @@
   margin: 0;
 }
 
+@keyframes mover {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    transform: translateY(-50px);
+  }
+  50% {
+    transform: translateY(50px);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 body {
   background-color: rgb(189, 189, 189);
 }
 
-header nav ul {
-  color: white;
-}
 header nav ul li {
   font-family: Arial, Helvetica, sans-serif;
   background-color: lightsteelblue;
-  display: flex;
+  display: inline-block;
   justify-content: center;
-  margin: 10px 45%;
+  justify-items: center;
+  margin: 20px;
   padding: 1px;
   border-radius: 20px;
+  color: white;
 }
 header .front-page h1 {
   text-align: center;
@@ -26,23 +42,20 @@ header .front-page h1 {
   padding: 1px;
   margin: 10px 35%;
 }
-header .front-page img {
+header .front-page .img-fluid {
   width: 50%;
   margin: 30px 25%;
+  animation: mover 3s ease;
 }
 
-main .carta img {
-  display: inline-block;
-  margin: 20px 40%;
-  width: 20%;
-}
-main .carta p {
-  font-size: x-large;
-  background-color: aliceblue;
+main .flex-container {
   display: flex;
-  margin: 10px 30%;
+  flex-direction: row;
   justify-content: center;
-  border-radius: 15px;
+}
+main .card {
+  background-color: lightsteelblue;
+  margin: 60px 120px;
 }
 
 footer {
@@ -51,13 +64,17 @@ footer {
 footer .pie h4 {
   font-size: x-large;
   font-family: Georgia, "Times New Roman", Times, serif;
-  text-decoration: underline;
   margin: 10px;
   padding: 10px;
 }
 footer .form {
   margin: 5px;
   padding: 5px;
+}
+footer .form .form-label {
+  font-family: "Times New Roman", Times, serif;
+  text-decoration: overline;
+  font-size: x-large;
 }
 
 

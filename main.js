@@ -1,158 +1,146 @@
-
-let cantidadDeObjetos = 0;
-const compraMinima = 1;
- 
-//--------------------------------------Arrays y objetos--------------------------------------------//
-let impresiones3D = [
-{   nombre:"Llaveros",
-    color:"gris",
-    stock:true,
-    descuento:"30% de descuento comprando mas de 10 unidades",
-    precio: 1000
-},
-
-{   nombre:"Figuras a escala",
-    color: "A eleccion",
-    stock: true, 
-    medidas: "samll-medium-large",
-    precio: 15000
-},
-
-{   nombre: "Portavasos",
-    color: "gris",
-    stock: false,
-    disenio:"Anime",
-    mensaje: "Los portavasos son fabricados por pedidos",
-    precio: 2500
-},
-
-{   nombre: "Maceteros Robert",
-    color: "Negro y gris",
-    medidas: "70mm x 100mm",
-    cantidad: 10,
-    precio: 4000
-}
+const impresiones3D = [
+    { id: 1, nombre: "Llaveros plakits", color: "gris", precio: 1000, descuento: 30, stock: 45 },
+    { id: 2, nombre: "Llaveros stich", color: "gris", precio: 1000, descuento: 30, stock: 45 },
+    { id: 3, nombre: "Figuras deadpool", color: "A elección", precio: 15000, descuento: 30, stock: 20 },
+    { id: 4, nombre: "Figuras naruto", color: "A elección", precio: 15000, descuento: 30, stock: 20 },
+    { id: 5, nombre: "Portavasos tortuga", color: "gris", precio: 2500, descuento: 30, stock: 0 },
+    { id: 6, nombre: "Portavasos varios", color: "gris", precio: 2500, descuento: 30, stock: 0 },
+    { id: 7, nombre: "Maceteros Robert leyendo", color: "Negro y gris", precio: 4000, descuento: 30, stock: 10 },
+    { id: 8, nombre: "Maceteros Robert guitarra", color: "Negro y gris", precio: 4000, descuento: 30, stock: 10 }
 ];
-//--------------------------------------Cierre arrays y objetos------------------------------------//
-
-
 
 let carrito = [];
-//----------------------------------------------Menu----------------------------------------------//
-function main(){
-    let opcion;
-    
-    do{
-    opcion = prompt (
-    "Elija una opcion: \n" +
-    "1. Elegir producto \n" +
-    "2. Eliminar productos del carrito \n" +
-    "3. Confirmar compra \n" +
-    "4. Salir de la pagina \n" +
-    "Seleccione una opcion"
-    )
-    switch(opcion){
-    case "1":
-        elegirProducto();
-        break;
-    
-    case "2":
-        EliminarProductos();
-        break;
+localStorage.removeItem("carrito");
+actualizarCarritoUI();
 
-    case "3":
-        confirmarCompra();
-        break;
-
-    case "4":
-        alert("Gracias por visitar nuestra pagina ¡vuelva pronto!");
-        break;
-    
-    default:
-    alert("El numero ingresado es incorrecto, intente nuevamente")
+class Producto {
+    constructor(id, nombre, color, precio, descuento, stock, cantidad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.color = color;
+        this.precio = precio;
+        this.descuento = descuento;
+        this.stock = stock;
+        this.cantidad = cantidad;
     }
+
+    getPrecioFinal() {
+        return this.precio - (this.precio * this.descuento / 100);
     }
-    while(opcion !== "4");
+
+    mostrarInfo() {
+        return `Producto ${this.id}:  ${this.nombre} | Precio: $${this.precio} | Color: ${this.color} | Stock: ${this.stock}`;
     }
-    main();
-//--------------------------------------------Cierre menu----------------------------------------//
-
-
-
-//---------------------------------------------Elegir producto-----------------------------------//
-function elegirProducto(){
-let listaDeProductos = "Productos en venta: \n";
-for(let i = 0; i < impresiones3D.length; i++){
-  listaDeProductos += (i + 1) + ". \n" + impresiones3D[i].nombre + ": $" + impresiones3D[i].precio + "\n";
 }
 
-let eleccion = prompt(listaDeProductos + "\nIngrese el numero del producto que desea eliminar:")
+function agregarAlCarrito(id) {
+    const producto = impresiones3D.find(p => p.id === id);
+    if (!producto) {
+        alert("Producto no encontrado.");
+        return;
+    }
+    if (producto.stock <= 0) {
+        alert(`El producto ${producto.nombre} no tiene stock disponible.`);
+        return;
+    }
 
-let indiceProducto = parseInt(eleccion) - 1;
-
-
-if(indiceProducto >= 0 && indiceProducto < impresiones3D.length){
-carrito.push(impresiones3D[indiceProducto]);
-cantidadDeObjetos++;
-
-alert("Producto agregado: " + impresiones3D[indiceProducto].nombre);
-
-}else{
-    alert("Numero invalido. Intente nuevamente.");
-}
-}
-
-elegirProducto();
-//------------------------------------------Cierre elegir producto------------------------------//
-
-
-
-//-------------------------------------------Eliminar carrito------------------------------------//
- function eliminarCarrito(){
-if ( carrito.length === 0){
-    alert("El carrito esta vacio.");
-    return;
+    const productoEnCarrito = carrito.find(p => p.id === id);
+    if (productoEnCarrito) {
+        productoEnCarrito.cantidad++;
+    } else {
+        const nuevoProducto = new Producto(producto.id, producto.nombre, producto.color, producto.precio, producto.descuento, producto.stock);
+        nuevoProducto.cantidad = 1;
+        carrito.push(nuevoProducto);
+    }
+    producto.stock--;
+    localStorage.setItem(`carrito`, JSON.stringify(carrito));
+    actualizarCarritoUI();
 }
 
-let listaDeCarrito = "Productos en carrito:\n";
-for(let i = 0; i < carrito.length; i++){
-    listaDeCarrito += (i + 1) + ". " + carrito[i].nombre + " -$" + carrito[i].precio + "\n";
-}
-let eleccion = prompt(listaDeCarrito + "\nIngrese el numero del producto que desa eliminar: ");
- let indiceEliminar = parseInt(eleccion) - 1;
-
- if(indiceEliminar >= 0 && indiceEliminar < carrito.length){
-    let eliminado = carrito.splice(indiceEliminar, 1)[0];
-    cantidadDeObjetos--;
-    alert("Producto eliminado: " + eliminado.nombre);
- }else{
-    alert("Invalido, intente nuevamente.");
- };
-}
-eliminarCarrito();
-//---------------------------------------------Cierre eliminar carrito----------------------------//
-
-
-
-//-----------------------------------------------Confirmar compra-----------------------------------//
-function confirmarCompra(){
-
-if(carrito.length < compraMinima){
-alert("Agregue un producto para realizar la compra.");
-return;
+function eliminarDelCarrito(id) {
+    const index = carrito.findIndex(p => p.id === id);
+    if (index === -1) {
+        alert("Producto no está en el carrito.");
+        return;
+    }
+    const producto = carrito[index];
+    const original = impresiones3D.find(p => p.id === id);
+    original.stock += producto.cantidad;
+    carrito.splice(index, 1);
+    alert(`${producto.nombre} eliminado del carrito.`);
 }
 
-let resumenCompra = "Resumen de su compra:\n";
-let total = 0;
+function actualizarCarritoUI() {
+    const contador = document.getElementById("carrito-contador");
+    const lista = document.getElementById("lista-carrito");
 
-for(let producto of carrito){
-resumenCompra += "- " + producto.nombre + " $" + producto.precio + "\n";
+    // Mostrar cantidad total de productos en el carrito
+    const totalCantidad = carrito.reduce((acc, prod) => acc + prod.cantidad, 0);
+    contador.textContent = totalCantidad > 0 ? `Carrito (${totalCantidad})` : "carrito";
+
+    // Limpiar contenido
+    lista.innerHTML = "";
+
+    // Mostrar productos en la lista
+    carrito.forEach(producto => {
+        const li = document.createElement("li");
+        li.className = "list-group-item d-flex justify-content-between align-items-center";
+        li.innerHTML = `
+            ${producto.nombre} x${producto.cantidad} - $${producto.getPrecioFinal ? producto.getPrecioFinal() * producto.cantidad : (producto.precio - producto.precio * producto.descuento / 100) * producto.cantidad}
+            <button class="btn btn-danger btn-sm eliminar-producto" data-id="${producto.id}">Eliminar</button>
+        `;
+        lista.appendChild(li);
+    });
+
+    // evento del boton eliminar
+    const botonesEliminar = document.querySelectorAll(".eliminar-producto");
+    botonesEliminar.forEach(boton => {
+        boton.addEventListener("click", () => {
+            const id = parseInt(boton.getAttribute("data-id"));
+            eliminarDelCarrito(id);
+            actualizarCarritoUI();
+        });
+    });
 }
 
-resumenCompra += "\nTotal a pagar: $" + total;
+function confirmarCompra() {
+    if (carrito.length === 0) {
+        alert("El carrito está vacío.");
+        return;
+    }
 
-alert(resumenCompra);
-alert("¡Gracias por su compra vuelva pronto!");
+    let total = 0;
+    let resumen = "Resumen de compra:\n";
+    carrito.forEach(producto => {
+        const subtotal = producto.getPrecioFinal ? producto.getPrecioFinal() * producto.cantidad : (producto.precio - producto.precio * producto.descuento / 100) * producto.cantidad;
+        resumen += `${producto.nombre} x${producto.cantidad} - $${subtotal.toFixed(2)}\n`;
+        total += subtotal;
+    });
+
+    resumen += `\nTotal a pagar: $${total.toFixed(2)}`;
+    alert(resumen);
+    carrito = []; 
+    // Vaciar carrito al confirmar
 }
-confirmarCompra();
-//------------------------------------------------Cierre confirmar compra---------------------------//
+// DOM
+document.addEventListener("DOMContentLoaded", () => {
+    const botones = document.querySelectorAll(".agregar-carrito");
+
+    botones.forEach(boton => {
+        boton.addEventListener("click", (e) => {
+            e.preventDefault();
+            const id = parseInt(boton.getAttribute("data-id"));
+            agregarAlCarrito(id);
+        });
+    });
+   const carritoGuardado = JSON.parce(localStorage.getItem("carrito"));
+  if (carritoGuardado) {
+    carrito = carritoGuardado.map(p => {
+        const prod = new Producto(p.id, p.nombre, p.color, p.precio, p.descuento, p.stock);
+        /* prod.cantidad = p.cantidad; */
+        return prod;
+    });
+}
+
+    actualizarCarritoUI();
+});
