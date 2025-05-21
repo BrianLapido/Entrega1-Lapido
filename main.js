@@ -9,9 +9,7 @@ const impresiones3D = [
     { id: 8, nombre: "Maceteros Robert guitarra", color: "Negro y gris", precio: 4000, descuento: 30, stock: 10 }
 ];
 
-let carrito = [];
-localStorage.removeItem("carrito");
-actualizarCarritoUI();
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 class Producto {
     constructor(id, nombre, color, precio, descuento, stock, cantidad) {
@@ -45,6 +43,7 @@ function agregarAlCarrito(id) {
     }
 
     const productoEnCarrito = carrito.find(p => p.id === id);
+    
     if (productoEnCarrito) {
         productoEnCarrito.cantidad++;
     } else {
@@ -53,8 +52,8 @@ function agregarAlCarrito(id) {
         carrito.push(nuevoProducto);
     }
     producto.stock--;
-    localStorage.setItem(`carrito`, JSON.stringify(carrito));
-    actualizarCarritoUI();
+    localStorage.setItem(`carrito`, JSON.stringify(carrito))
+    actualizarCarritoUI(); 
 }
 
 function eliminarDelCarrito(id) {
@@ -133,11 +132,10 @@ document.addEventListener("DOMContentLoaded", () => {
             agregarAlCarrito(id);
         });
     });
-   const carritoGuardado = JSON.parce(localStorage.getItem("carrito"));
+    
   if (carritoGuardado) {
     carrito = carritoGuardado.map(p => {
         const prod = new Producto(p.id, p.nombre, p.color, p.precio, p.descuento, p.stock);
-        /* prod.cantidad = p.cantidad; */
         return prod;
     });
 }
