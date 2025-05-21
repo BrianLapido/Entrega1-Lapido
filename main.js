@@ -9,7 +9,7 @@ const impresiones3D = [
     { id: 8, nombre: "Maceteros Robert guitarra", color: "Negro y gris", precio: 4000, descuento: 30, stock: 10 }
 ];
 
-let carrito = [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 localStorage.removeItem("carrito");
 actualizarCarritoUI();
 
@@ -133,11 +133,12 @@ document.addEventListener("DOMContentLoaded", () => {
             agregarAlCarrito(id);
         });
     });
+    
+    localStorage.setItem(`carrito`, JSON.stringify(carrito));
    const carritoGuardado = JSON.parce(localStorage.getItem("carrito"));
   if (carritoGuardado) {
     carrito = carritoGuardado.map(p => {
         const prod = new Producto(p.id, p.nombre, p.color, p.precio, p.descuento, p.stock);
-        /* prod.cantidad = p.cantidad; */
         return prod;
     });
 }
