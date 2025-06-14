@@ -10,7 +10,7 @@ const impresiones3D = [
     { id: 8, nombre: "Maceteros Robert plant", color: "Negro y gris", precio: 4000, descuento: 30, stock: 10 }
 ];
 
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || JSON.parse(localStorage.getItem("carrito")) || [];
 localStorage.removeItem("carrito");
 actualizarCarritoUI();
 // clases
