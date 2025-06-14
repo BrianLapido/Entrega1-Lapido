@@ -6,7 +6,10 @@
     <title>Impresiones 3d</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-     <link rel="stylesheet" href="./scss/style.css">    
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="./scss/style.css">    
 </head>
 <body>
 
@@ -26,19 +29,19 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link figuras" href="./pages/figuras.html">Figuras</a>
+                  <a class="nav-link figuras" href="./pages/impresiones.html">Impresiones</a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link portavasos" href="./pages/portavasos.html">Portavasos</a>
+                  <a class="nav-link portavasos" href="./pages/maquinas.html">Máquinas</a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link llaveros" href="./pages/llaveros.html">Llaveros</a>
+                  <a class="nav-link llaveros" href="./pages/materiales.html">Materiales</a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link maceteros" href="./pages/maceteros.html">Maceteros Robert</a>
+                  <a class="nav-link maceteros" href="./pages/servTec.html">Servicio Técnico</a>
                 </li>     
             </ul>
           </div>
@@ -47,12 +50,47 @@
     </nav>
 
 
-          <div class="front-page portada">
-            <h1><strong>Tienda oline sobre productos 3D</strong></h1>
-            <img src="./img/img-portada.png" class="img-fluid" alt="portada 3d">
-          </div>
+  <div class="front-page portada">
+    <h1><strong>Tienda online sobre productos 3D</strong></h1>
+
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="./img/img-portada.png" class="d-block w-200 img-fluid" alt="portada">
+    </div>
+
+    <div class="carousel-item">
+      <img src="./img/herramientas.jpg" class="d-block w-200 img-fluid" alt="herramientas">
+    </div>
+
+    <div class="carousel-item">
+      <img src="./img/filamento.png" class="d-block w-200 img-fluid" alt="filamentos">
+    </div>
+
+    <div class="carousel-item">
+      <img src="./img/image-36-edited.avif" class="d-block w-200 img-fluid" alt="maquina">
+    </div>
+
+    <div class="carousel-item">
+      <img src="./img/OIP.webp" class="d-block w-200 img-fluid" alt="maquina">
+    </div>
+
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+  
   </header>
-    
+  
+   
+
  <main class="tarjetas">
 
   <section id="carrito-contenido" class="container mt-4">
@@ -60,26 +98,33 @@
     <ul id="lista-carrito" class="list-group"></ul>
   </section>
    
-<section class="cards-product" id="cards">
+<section class="cards-product" id="section">
+
+   <div class="confirm-purchase"><p id="confirmacion-texto" class="text-info fs-5 mt-3"></p>
+      <button id="confirmar-compra" class="btn btn-success mt-3">Confirmar compra</button>
+    </div>
+
 <ul class="list-cards">
 
 <li id="llaveros">
 
   <div class="flex-container">
     <div class="card" style="width: 34rem;">
-      <img src="./img/plakit.jpg" class="card-img-top" alt="plakit">
+      <img src="./img/plakit.webp" class="card-img-top card-img" alt="plakit">
       <div class="card-body">
         <h5 class="card-title">Llaveros plakit's</h5>
-        <p class="card-text">Llaveros de nuestros heroes y villanos favoritos.</p>
+        <p><strong>$1000</strong></p>
+        <p class="card-text">Llaveros de nuestros héroes y villanos favoritos.</p>
         <a href="#" class="btn btn-primary agregar-carrito" data-id="1">Agregar al carrito</a>
       </div>
     </div>
 
-    <div class="card" style="width: 30rem;">
-      <img src="./img/stich.jpg" class="card-img-top" alt="stich">
+    <div class="card" style="width: 34rem;">
+      <img src="./img/stich.webp" class="card-img-top" alt="stich">
       <div class="card-body">
         <h5 class="card-title">Llaveros stich</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+        <p><strong>$1000</strong></p>
+        <p class="card-text">Llaveros de otra galaxia.</p>
         <a href="#" class="btn btn-primary agregar-carrito" data-id="2">Agregar al carrito</a>
       </div>
     </div>
@@ -91,19 +136,21 @@
 
   <div class="flex-container">
     <div class="card" style="width: 30rem;">
-      <img src="./img/deadpool.jpeg" class="card-img-top" alt="deadpool">
+      <img src="./img/deadpool.webp" class="card-img-top" alt="deadpool">
       <div class="card-body">
         <h5 class="card-title">Figura deadpool</h5>
-        <p class="card-text">Figuras a escala</p>
+        <p><strong>$15000</strong></p>
+        <p class="card-text">Figuras a escala.</p>
         <a href="#" class="btn btn-primary agregar-carrito" data-id="3">Agregar al carrito</a>
       </div>
     </div>
 
     <div class="card" style="width: 30rem;">
-      <img src="./img/naruto.avif" class="card-img-top" alt="naruto">
+      <img src="./img/naruto.webp" class="card-img-top" alt="naruto">
       <div class="card-body">
         <h5 class="card-title">Figura naruto</h5>
-        <p class="card-text">Figuras a escala</p>
+        <p><strong>$15000</strong></p>
+        <p class="card-text">Figuras a escala.</p>
         <a href="#" class="btn btn-primary agregar-carrito" data-id="4">Agregar al carrito</a>
       </div>
     </div>
@@ -115,19 +162,20 @@
 <li id="portavasos">
 
   <div class="flex-container">
-    <div class="card" style="width: 30rem;">
-      <img src="./img/portavasos-tortuga.jpg" class="card-img-top" alt="tortuga">
+    <div class="card" style="width: 34rem;">
+      <img src="./img/portavasos-tortuga.webp" class="card-img-top" alt="tortuga">
       <div class="card-body">
         <h5 class="card-title">Portavasos tortuga</h5>
-        <p class="card-text"></p>
+        <p><strong>$2500</strong></p>
         <a href="#" class="btn btn-primary agregar-carrito" data-id="5">Agregar al carrito</a>
       </div>
     </div>
 
     <div class="card" style="width: 34rem;">
-      <img src="./img/portavasos-varios.jpeg" class="card-img-top" alt="varios">
+      <img src="./img/portavasos-varios.webp" class="card-img-top" alt="varios">
       <div class="card-body">
         <h5 class="card-title">Portavasos varios</h5>
+        <p><strong>$2500</strong></p>
         <p class="card-text">Crea y selecciona tu portavasos favorito.</p>
         <a href="#" class="btn btn-primary agregar-carrito" data-id="6">Agregar al carrito</a>
       </div>
@@ -139,19 +187,21 @@
 <li id="macetas">
 
   <div class="flex-container">
-    <div class="card" style="width: 30rem;">
-      <img src="./img//rober-libro.jpeg" class="card-img-top" alt="maceta">
+    <div class="card" style="width: 34rem;">
+      <img src="./img/robert.webp" class="card-img-top" alt="maceta">
       <div class="card-body">
-        <h5 class="card-title">Robert leyendo</h5>
+        <h5 class="card-title">Maceteros <strong>Robert plant</strong></h5>
+        <p><strong>$4000</strong></p>
         <p class="card-text">Dale vida a tu hogar con maceteros robert.</p>
         <a href="#" class="btn btn-primary agregar-carrito" data-id="7">Agregar al carrito</a>
       </div>
     </div>
 
     <div class="card" style="width: 34rem;">
-      <img src="./img/robert-guitarra.webp" class="card-img-top" alt="maceta">
+      <img src="./img/robert2.webp" class="card-img-top" alt="maceta">
       <div class="card-body">
-        <h5 class="card-title">Robert con guitarra</h5>
+        <h5 class="card-title">Maceteros <strong>Robert plant</strong></h5>
+        <p><strong>$4000</strong></p>
         <p class="card-text">Dale vida a tu hogar con maceteros robert.</p>
         <a href="#" class="btn btn-primary agregar-carrito" data-id="8">Agregar al carrito</a>
       </div>
@@ -160,23 +210,22 @@
 
 </li>
 </section>
-
 </ul> 
-<button class="btn btn-success mt-3" onclick="confirmarCompra()">Confirmar compra</button>
+
 </main>
 
 
-     <footer>
+  <footer>
 
-      <div class="pie" id="consulta"><h4>Deje su consulta y responderemos a la brevedad</h4></div>
-      
+      <div class="pie" id="consulta"><h4>Deje su consulta y responderemos a la brevedad.</h4></div>
+
       <div class="input-group mb-3 form"> 
         <span class="input-group-text" id="inputGroup-sizing-default">Nombre completo</span>
         <input type="text" class="form-control-lg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
       </div>
 
       <div class="input-group mb-3 form">
-        <span class="input-group-text" id="inputGroup-sizing-default">Numero de contacto</span>
+        <span class="input-group-text" id="inputGroup-sizing-default">Número de contacto</span>
         <input type="text" class="form-control-lg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
       </div>
 
@@ -184,11 +233,35 @@
         <label for="exampleFormControlTextarea1" class="form-label">Escriba una breve reseña</label>
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
         <input type="button" class="btn-enviar"  value="Enviar">
-      </div>
+      </div>  
+    
+
+    <nav class="redes opacity-75">
+            <div class="networks" >
+                <a href="https://www.facebook.com/">
+                <img src="./img/logoFb.png" alt="Logo de fb" width="30px" height="30%"></a>
+            </div>
+            <div class="networks">
+                <a href="https://www.instagram.com/">
+                <img src="./img/logoIg.png" alt="Logo de instagram" width="30px" height="30%"></a>
+            </div>
+            
+            <div class="networks" >
+                <a href="https://x.com/i/flow/login?mx=2">
+                    <img src="./img/logoX.webp"  alt="Logo de x" width="30px" height="30%">
+                </a>
+            </div>
+            <div class="networks">
+                <a href="https://www.tiktok.com/login?lang=es&redirect_url=https%3A%2F%2Fwww.tiktok.com%2Fupload%3Flang%3Des">
+                    <img src="./img/logoTiktok.png" alt="Logo de tiktok" width="30px" height="30%">
+                </a>
+            </div>
+        </nav>
+
+        <h6 class="text-end ">Pagina creada por <strong>Brian Lapido</strong>. Año de cursada 2025</h6>
+   </footer>
 
 
-
-     </footer>
    <script src="main.js"></script>
 
     

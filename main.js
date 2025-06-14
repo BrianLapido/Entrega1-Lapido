@@ -1,3 +1,4 @@
+//array con objetos
 const impresiones3D = [
     { id: 1, nombre: "Llaveros plakits", color: "gris", precio: 1000, descuento: 30, stock: 45 },
     { id: 2, nombre: "Llaveros stich", color: "gris", precio: 1000, descuento: 30, stock: 45 },
@@ -5,12 +6,14 @@ const impresiones3D = [
     { id: 4, nombre: "Figuras naruto", color: "A elección", precio: 15000, descuento: 30, stock: 20 },
     { id: 5, nombre: "Portavasos tortuga", color: "gris", precio: 2500, descuento: 30, stock: 0 },
     { id: 6, nombre: "Portavasos varios", color: "gris", precio: 2500, descuento: 30, stock: 0 },
-    { id: 7, nombre: "Maceteros Robert leyendo", color: "Negro y gris", precio: 4000, descuento: 30, stock: 10 },
-    { id: 8, nombre: "Maceteros Robert guitarra", color: "Negro y gris", precio: 4000, descuento: 30, stock: 10 }
+    { id: 7, nombre: "Maceteros Robert plant", color: "Negro y gris", precio: 4000, descuento: 30, stock: 10 },
+    { id: 8, nombre: "Maceteros Robert plant", color: "Negro y gris", precio: 4000, descuento: 30, stock: 10 }
 ];
 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
+localStorage.removeItem("carrito");
+actualizarCarritoUI();
+// clases
 class Producto {
     constructor(id, nombre, color, precio, descuento, stock, cantidad) {
         this.id = id;
@@ -30,20 +33,29 @@ class Producto {
         return `Producto ${this.id}:  ${this.nombre} | Precio: $${this.precio} | Color: ${this.color} | Stock: ${this.stock}`;
     }
 }
-
+//agregar al carrito
 function agregarAlCarrito(id) {
     const producto = impresiones3D.find(p => p.id === id);
     if (!producto) {
-        alert("Producto no encontrado.");
+            Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Producto no encontrado!",
+            footer: '<a href="#">Why do I have this issue?</a>'
+        });
         return;
     }
     if (producto.stock <= 0) {
-        alert(`El producto ${producto.nombre} no tiene stock disponible.`);
+        Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text:  `${producto.nombre} no tiene stock disponible`,
+        
+    });
         return;
     }
 
     const productoEnCarrito = carrito.find(p => p.id === id);
-    
     if (productoEnCarrito) {
         productoEnCarrito.cantidad++;
     } else {
@@ -52,10 +64,10 @@ function agregarAlCarrito(id) {
         carrito.push(nuevoProducto);
     }
     producto.stock--;
-    localStorage.setItem(`carrito`, JSON.stringify(carrito))
-    actualizarCarritoUI(); 
+    localStorage.setItem(`carrito`, JSON.stringify(carrito));
+    actualizarCarritoUI();
 }
-
+// eliminar producto
 function eliminarDelCarrito(id) {
     const index = carrito.findIndex(p => p.id === id);
     if (index === -1) {
@@ -66,14 +78,25 @@ function eliminarDelCarrito(id) {
     const original = impresiones3D.find(p => p.id === id);
     original.stock += producto.cantidad;
     carrito.splice(index, 1);
-    alert(`${producto.nombre} eliminado del carrito.`);
+     Toastify({
+                text: `${producto.nombre} fue eliminado del carrito.`,
+                duration: 3000,
+                 newWindow: false,
+                close: true,
+                gravity: "top", 
+                position: "left",
+                stopOnFocus: true, 
+                style: {
+                  background: "linear-gradient(to right,rgb(176, 176, 0),rgb(201, 168, 61))",
+                },
+              }).showToast();
 }
-
+// actualizar carrito
 function actualizarCarritoUI() {
     const contador = document.getElementById("carrito-contador");
     const lista = document.getElementById("lista-carrito");
 
-    // Mostrar cantidad total de productos en el carrito
+    // Cantidad total de productos en el carrito
     const totalCantidad = carrito.reduce((acc, prod) => acc + prod.cantidad, 0);
     contador.textContent = totalCantidad > 0 ? `Carrito (${totalCantidad})` : "carrito";
 
@@ -102,28 +125,68 @@ function actualizarCarritoUI() {
     });
 }
 
-function confirmarCompra() {
+// confirmar la compra
+async function confirmarCompra() {
+
     if (carrito.length === 0) {
-        alert("El carrito está vacío.");
+        await Swal.fire({
+        title: "Carrito vacio",
+        text: "Agrega productos antes de comprar",
+        icon: "warning"
+    });
         return;
     }
 
     let total = 0;
-    let resumen = "Resumen de compra:\n";
+    let resumen = "";
     carrito.forEach(producto => {
-        const subtotal = producto.getPrecioFinal ? producto.getPrecioFinal() * producto.cantidad : (producto.precio - producto.precio * producto.descuento / 100) * producto.cantidad;
+        const subtotal = producto.getPrecioFinal() * producto.cantidad;
         resumen += `${producto.nombre} x${producto.cantidad} - $${subtotal.toFixed(2)}\n`;
         total += subtotal;
+        return;
+    });
+      
+    const resultado = await Swal.fire({
+        title: "¿Confirmar compra?",
+        text: `${resumen}\n\nTotal a pagar: $${total.toFixed(2)}`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, comprar",
+        cancelButtonText: "Cancelar"
     });
 
-    resumen += `\nTotal a pagar: $${total.toFixed(2)}`;
-    alert(resumen);
-    carrito = []; 
-    // Vaciar carrito al confirmar
-}
+    if(resultado.isConfirmed){
+            Swal.fire({
+            title: "Compra exitosa!",
+            text: "Gracias por tu compra.",
+            icon: "success"
+        }).then( () => {
+        carrito = []; 
+        localStorage.removeItem("carrito");
+        actualizarCarritoUI();
+        location.reload();
+        });
+        return;
+    }else{
+            Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Algo fallo con su compra intente nuevamente!",
+            footer: '<a href="#">¿tuvo algun inconveniente?</a>'
+            });
+            
+        };
+         // Vaciar carrito al confirmar
+         
+        
+         
+    
+    };
+
 // DOM
 document.addEventListener("DOMContentLoaded", () => {
     const botones = document.querySelectorAll(".agregar-carrito");
+    const botonConfirmar = document.querySelector("#confirmar-compra");
 
     botones.forEach(boton => {
         boton.addEventListener("click", (e) => {
@@ -131,11 +194,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const id = parseInt(boton.getAttribute("data-id"));
             agregarAlCarrito(id);
         });
-    });
+        });
+
+        botonConfirmar.addEventListener("click", async () => {
+            await confirmarCompra();
+          });
     
+    
+    localStorage.setItem(`carrito`, JSON.stringify(carrito)); 
+   const carritoGuardado = JSON.parse(localStorage.getItem("carrito"));
+
   if (carritoGuardado) {
     carrito = carritoGuardado.map(p => {
-        const prod = new Producto(p.id, p.nombre, p.color, p.precio, p.descuento, p.stock);
+        const prod = new Producto(p.id, p.nombre, p.color, p.precio, p.descuento, p.stock, p.cantidad);
         return prod;
     });
 }
