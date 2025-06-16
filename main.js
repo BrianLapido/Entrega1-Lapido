@@ -183,6 +183,8 @@ async function confirmarCompra() {
     
     };
 
+    
+
 // DOM
 document.addEventListener("DOMContentLoaded", () => {
     const botones = document.querySelectorAll(".agregar-carrito");

@@ -1,7 +1,45 @@
 *{
 margin: 0;
-
 }
+
+//media query
+@media(min-width:480px) and (max-width:992px){
+    body{
+      margin: none;
+        font-size: 15px;
+    }
+
+    .navbar{
+      margin: 10%;
+    }
+
+    .title{
+      position: relative;
+      right: 25%;
+      width: 80%;
+    }
+
+    #carrito-contador{
+      width: 20%;
+    }
+
+    .flex-container{
+    flex-wrap: wrap;
+  }
+
+    .footer{
+    background-color: aliceblue;
+    margin: 10%;
+
+    .redes{
+      display: flex;
+      justify-content: center;
+    }
+
+  }
+}
+
+//keyframes
 @keyframes mover {
   0% {opacity: 0;}
   25% {transform: translateY(-50px);}
@@ -102,7 +140,7 @@ footer{
         text-decoration:overline;
         font-size: x-large;
       }
-}
+
 
 nav{
     display: flex;
@@ -120,31 +158,6 @@ nav{
 }
 }
 
-
-
-/*# sourceMappingURL=style.scss.map */
-
-/* body {
-  background-color: rgb(189, 189, 189);
-}
-
-header{
-  .front-page .portada{
-    h1{
-      text-align: center;
-      justify-content: center;
-      background-color: lightskyblue;
-      border-radius: 20px;
-      padding: 1px;
-      margin: 10px 30%;
-    }
-    img{
-      width: 100px;
-      height: 100px;
-    }
-    
-  }
-  
 }
 
 
@@ -156,4 +169,4 @@ main .menu-tarjetas{
   height: 20%;
 
 
-} */
+} 
